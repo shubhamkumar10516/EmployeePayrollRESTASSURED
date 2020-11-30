@@ -1,19 +1,13 @@
 package EmployeePayrollREST;
-
 import org.junit.Test;
-
 import com.google.gson.Gson;
-
 import EmployeePayrollREST.EmployeePayrollService.IOService;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-
 import static org.junit.Assert.*;
-
 import java.time.LocalDate;
 import java.util.Arrays;
-
 import org.junit.Before;
 
 public class EmployeePayrollRESTTest {
@@ -50,12 +44,10 @@ public class EmployeePayrollRESTTest {
 
     @Test
     public void addingListOfEmployeeAndChecking201ResponseAndCount() {
-    	
-    	EmployeePayrollService employeePayrollService;
+     	EmployeePayrollService employeePayrollService;
     	EmployeePayrollData[] arrOfEmps = getListOfEmployee();
     	employeePayrollService = new EmployeePayrollService(Arrays.asList(arrOfEmps));
-    	
-    	EmployeePayrollData[] arrOfEmpPayrolls = {
+       	EmployeePayrollData[] arrOfEmpPayrolls = {
     		new EmployeePayrollData(0, "Sunder", "M", 100000, LocalDate.now()),
     		new EmployeePayrollData(0, "Mukesh", "M", 300000, LocalDate.now()),
     		new EmployeePayrollData(0, "Anil", "M", 400000, LocalDate.now())
@@ -95,8 +87,7 @@ public class EmployeePayrollRESTTest {
     	employeePayrollService = new EmployeePayrollService(Arrays.asList(arrOfEmps));
     	EmployeePayrollData employeePayrollData = employeePayrollService.getEmployeePayrollData("Anil");
     	RequestSpecification requestSpecification = RestAssured.given();
-		
-    	requestSpecification.header("Content-Type", "application/json");
+	requestSpecification.header("Content-Type", "application/json");
 		Response response =requestSpecification.delete("/employees/"+employeePayrollData.id);
 		int statusCode = response.getStatusCode();
 		assertEquals(200,  statusCode);
@@ -113,7 +104,6 @@ public class EmployeePayrollRESTTest {
     }
 
 	private EmployeePayrollData[] getListOfEmployee() {
-		
 		Response response = RestAssured.get("/employees");
 		System.out.println("Employee payroll data: "+ response.asString());
 		Gson gson = new Gson();
